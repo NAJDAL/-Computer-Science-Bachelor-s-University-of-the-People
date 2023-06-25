@@ -1,0 +1,54 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Data
+initial_price = 20
+reduced_price_1 = 18
+reduced_price_2 = 16
+initial_quantity = 400
+quantity_1 = 450
+quantity_2 = 500
+
+# Calculate total revenue
+revenue_initial = initial_price * initial_quantity
+revenue_1 = reduced_price_1 * quantity_1
+revenue_2 = reduced_price_2 * quantity_2
+
+# Generate a range of quantities
+quantities = np.linspace(initial_quantity, quantity_2, num=100)
+
+# Calculate corresponding prices using linear interpolation
+prices = np.interp(quantities, [initial_quantity, quantity_2], [initial_price, reduced_price_2])
+
+# Set up the figure and axis
+fig, ax = plt.subplots(figsize=(8, 6))
+
+# Plotting the demand curve
+ax.plot(quantities, prices, color='blue', linewidth=2, label='Demand Curve')
+ax.scatter([initial_quantity, quantity_1, quantity_2], [initial_price, reduced_price_1, reduced_price_2],
+           color='red', edgecolors='black', linewidth=1, s=80, label='Data Points')
+
+# Annotate the data points with revenue
+ax.annotate(f'Revenue: ${revenue_initial}', (initial_quantity, initial_price), xytext=(10, 15),
+             textcoords='offset points', arrowprops=dict(arrowstyle='->'))
+ax.annotate(f'Revenue: ${revenue_1}', (quantity_1, reduced_price_1), xytext=(10, -15),
+             textcoords='offset points', arrowprops=dict(arrowstyle='->'))
+ax.annotate(f'Revenue: ${revenue_2}', (quantity_2, reduced_price_2), xytext=(10, -15),
+             textcoords='offset points', arrowprops=dict(arrowstyle='->'))
+
+# Setting labels and title
+ax.set_xlabel('Quantity Demanded', fontsize=12)
+ax.set_ylabel('Price', fontsize=12)
+ax.set_title('Demand Curve', fontsize=14)
+
+# Grid lines
+ax.grid(True)
+
+# Legend
+ax.legend()
+
+# Adjusting plot margins
+plt.tight_layout()
+
+# Display the graph
+plt.show()
